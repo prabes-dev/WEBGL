@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+</head>
+<body>
+    <link rel="stylesheet" href="script.js">
+    <canvas></canvas>
+<script type="importmap">
+{
+	"imports": {
+		"three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+		"three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
+		"@lumaai/luma-web": "https://unpkg.com/@lumaai/luma-web@0.2.0/dist/library/luma-web.module.js"
+	}
+}
+</script>
+<script type="module">
+import { WebGLRenderer, PerspectiveCamera, Scene } from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { LumaSplatsThree } from '@lumaai/luma-web';
+
+let canvas = document.querySelector('canvas');
+
+let renderer = new WebGLRenderer({
+	canvas: canvas,
+	antialias: false
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+let scene = new Scene();
+
+let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 2;
+
+let controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
+let splat = new LumaSplatsThree({
+	source: 'https://lumalabs.ai/embed/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3?mode=sparkles&background=%23ffffff&color=%23000000&showTitle=true&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&cinematicVideo=undefined&showMenu=false'
+});
+scene.add(splat);
+
+renderer.setAnimationLoop(() => {
+	controls.update();
+	renderer.render(scene, camera);
+});
+</script>
+<!-- <div class="links">
+    for flower
+    https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a
+
+    for car
+    https://lumalabs.ai/embed/76bbf4fa-3f13-4edd-a00d-3e381c4c632d?mode=sparkles&background=%23ffffff&color=%23000000&showTitle=true&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&cinematicVideo=undefined&showMenu=false
+
+    for shrine
+    https://lumalabs.ai/embed/9ec5306a-4bd3-46fe-9522-1f8a1281f6b3?mode=sparkles&background=%23ffffff&color=%23000000&showTitle=true&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&cinematicVideo=undefined&showMenu=false
+</div> -->
+
+</body>
+</html>
